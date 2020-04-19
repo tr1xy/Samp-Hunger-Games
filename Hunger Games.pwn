@@ -530,12 +530,12 @@ hook OnGameModeInit()
 		if(CreateObject(2969, boxObject[i][0], boxObject[i][1], boxObject[i][2], boxObject[i][3], boxObject[i][4], boxObject[i][5]) != INVALID_OBJECT_ID)
 		{
 			printf("[HG] Kutija broj %i je kreirana na X: %.2f Y: %.2f Z: %.2f", boxObject[i][1], boxObject[i][2], boxObject[i][3]);
-			break;
+			continue; // Nastavi loop
 		}
 		else
 		{
 			printf("[HG] Neuspelo kreiranje kutije ID %d (limit objekata od %d je prekoracen)!", i, MAX_OBJECTS);
-			break;
+			continue; // Nastavi loop
 		}
 	}
 
@@ -545,12 +545,12 @@ hook OnGameModeInit()
 		if(Create3DTextLabel("/kutija", 0xF81414FF, boxObject[i][0], boxObject[i][1], boxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
 		{
 			printf("[HG] Label za kutiju broj %i je kreiran na X: %.2f Y: %.2f Z: %.2f", boxObject[i][1], boxObject[i][2], boxObject[i][3]);
-			break;
+			continue; // Nastavi loop
 		}
 		else
 		{
 			printf("[HG] Neuspelo kreiranje labela za kutiju ID %d (limit labela od %d je prekoracen)!", i, _:MAX_3DTEXT_GLOBAL);
-			break;
+			break; // Zaustavi loop jer dalje nece moci da se kreira svakako
 		}
 	}
 
@@ -566,7 +566,7 @@ hook OnGameModeInit()
 		else
 		{
 			printf("[HG] Neuspelo kreiranje mega kutije ID %d (limit objekata od %d je prekoracen)!", i, MAX_OBJECTS);
-			break;
+			break; // Zaustavi loop jer dalje nece moci da se kreira svakako
 		}
 	}
 	// Mega Box Labels
@@ -575,12 +575,12 @@ hook OnGameModeInit()
 		if(Create3DTextLabel("/megakutija", 0xF81414FF, megaBoxObject[i][0], megaBoxObject[i][1], megaBoxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
 		{
 			printf("[HG] Label za mega kutiju broj %i je kreiran na X: %.2f Y: %.2f Z: %.2f", megaBoxObject[i][1], megaBoxObject[i][2], megaBoxObject[i][3]);
-			break;
+			continue; // Nastavi loop
 		}
 		else
 		{
 			printf("[HG] Neuspelo kreiranje labela za mega kutiju ID %d (limit labela od %d je prekoracen)!", i, _:MAX_3DTEXT_GLOBAL);
-			break;
+			break; // Zaustavi loop jer dalje nece moci da se kreira svakako
 		}
 	}
 
@@ -685,6 +685,9 @@ YCMD:megakutija(playerid, params[], help)
 
 	for(new box_id = 0; box_id < sizeof(megaBoxObject); box_id++)
 	{
+		if(!IsPlayerInRangeOfPoint(playerid, 2.0, megaBoxObject[box_id][0], megaBoxObject[box_id][1], megaBoxObject[box_id][2]))
+			continue; // Nastavi loop
+
 		SendClientMessage(playerid, -1, "Otvorio si Mega Kutiju!");
 
 		GivePlayerWeapon(playerid, 24, 10);
@@ -707,29 +710,27 @@ YCMD:kutija(playerid, params[], help)
 
 	for(new box_id = 0; box_id < sizeof(boxObject); box_id++)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 2.0, boxObject[box_id][0], boxObject[box_id][1], boxObject[box_id][2]))
-		{
-			new
-				weaponName[32],
-				randomWeapon = (random_int(17, 33) + 1),
-				randomAmmo = (random_int(5, 15));
+		if(!IsPlayerInRangeOfPoint(playerid, 2.0, boxObject[box_id][0], boxObject[box_id][1], boxObject[box_id][2]))
+			continue; // Nastavi loop
 
-			// #TODO: Fix this > make it smarter.
-			if(GetPlayerWeapon(playerid) == randomWeapon) {
-				ResetPlayerWeapons(playerid);
-			}
+		new
+			weaponName[32],
+			randomWeapon = (random_int(17, 33) + 1),
+			randomAmmo = (random_int(5, 15));
 
-			GivePlayerWeapon(playerid, randomWeapon, randomAmmo);
-
-			GetWeaponName(randomWeapon, weaponName, sizeof(weaponName));
-
-			va_SendClientMessage(playerid, -1, "[HungerGames] Izvukao si %s iz kutije!", weaponName);
-
-			Timer_BoxMessage[playerid] = repeat BoxCountdown(playerid);
-			canOpenBox[playerid] = (gettime() + 10);
-
-			break;
+		// #TODO: Fix this > make it smarter.
+		if(GetPlayerWeapon(playerid) == randomWeapon) {
+			ResetPlayerWeapons(playerid);
 		}
+
+		GivePlayerWeapon(playerid, randomWeapon, randomAmmo);
+
+		GetWeaponName(randomWeapon, weaponName, sizeof(weaponName));
+
+		va_SendClientMessage(playerid, -1, "[HungerGames] Izvukao si %s iz kutije!", weaponName);
+
+		Timer_BoxMessage[playerid] = repeat BoxCountdown(playerid);
+		canOpenBox[playerid] = (gettime() + 10);
 	}
 	return COMMAND_OK;
 }
