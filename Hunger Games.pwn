@@ -696,6 +696,8 @@ YCMD:megakutija(playerid, params[], help)
 		SetPlayerArmour(playerid, 30.0);
 
 		openedMegaBox[playerid] = true;
+
+		break; // Zaustavi loop
 	}
 	return COMMAND_OK;
 }
@@ -731,6 +733,8 @@ YCMD:kutija(playerid, params[], help)
 
 		Timer_BoxMessage[playerid] = repeat BoxCountdown(playerid);
 		canOpenBox[playerid] = (gettime() + 10);
+
+		break; // Zaustavi loop
 	}
 	return COMMAND_OK;
 }
