@@ -535,7 +535,7 @@ hook OnGameModeInit()
 		else
 		{
 			printf("[HG] Neuspelo kreiranje kutije ID %d (limit objekata od %d je prekoracen)!", i, MAX_OBJECTS);
-			continue; // Nastavi loop
+			break; // Zaustavi loop jer dalje nece moci da se kreira svakako
 		}
 	}
 
@@ -561,7 +561,7 @@ hook OnGameModeInit()
 		if(CreateObject(964, megaBoxObject[i][0], megaBoxObject[i][1], megaBoxObject[i][2], megaBoxObject[i][3], megaBoxObject[i][4], megaBoxObject[i][5]) != INVALID_OBJECT_ID)
 		{
 			printf("[HG] Mega kutija broj %i je kreirana na X: %.2f Y: %.2f Z: %.2f", megaBoxObject[i][1], megaBoxObject[i][2], megaBoxObject[i][3]);
-			break;
+			continue; // Nastavi loop
 		}
 		else
 		{
