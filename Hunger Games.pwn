@@ -542,7 +542,7 @@ hook OnGameModeInit()
 	// Box Labels
 	for(new i = 0; i < sizeof(boxObject); ++i)
 	{
-		if(Create3DTextLabel("/kutija", 0xF81414FF, boxObject[i][0], boxObject[i][1], boxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
+		if(Create3DTextLabel("Pritisnite 'Y' da biste otvorili kutiju.", 0xF81414FF, boxObject[i][0], boxObject[i][1], boxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
 		{
 			printf("[HG] Label za kutiju broj %i je kreiran na X: %.2f Y: %.2f Z: %.2f", boxObject[i][1], boxObject[i][2], boxObject[i][3]);
 			continue; // Nastavi loop
@@ -572,7 +572,7 @@ hook OnGameModeInit()
 	// Mega Box Labels
 	for(new i = 0; i < sizeof(megaBoxObject); ++i)
 	{
-		if(Create3DTextLabel("/megakutija", 0xF81414FF, megaBoxObject[i][0], megaBoxObject[i][1], megaBoxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
+		if(Create3DTextLabel("Pritisnite 'Y' da biste otvorili kutiju.", 0xF81414FF, megaBoxObject[i][0], megaBoxObject[i][1], megaBoxObject[i][2], 20.0, 0) != INVALID_3DTEXT_ID)
 		{
 			printf("[HG] Label za mega kutiju broj %i je kreiran na X: %.2f Y: %.2f Z: %.2f", megaBoxObject[i][1], megaBoxObject[i][2], megaBoxObject[i][3]);
 			continue; // Nastavi loop
